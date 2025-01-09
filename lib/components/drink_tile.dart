@@ -18,15 +18,13 @@ class DrinkTile extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: EdgeInsets.only(bottom: 10),
+        margin: const EdgeInsets.only(bottom: 10),
         decoration: BoxDecoration(
           color: Colors.brown[100],
           borderRadius: BorderRadius.circular(12),
         ),
         child: ListTile(
           title: Text(drink.name),
-          subtitle: Text(drink.price),
-          leading: Image.asset(drink.imagePath),
           trailing: trailing,
         ),
       ),
