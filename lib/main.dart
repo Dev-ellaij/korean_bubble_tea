@@ -14,9 +14,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => KoreanBubbleTeaShop(),
-      child: const MaterialApp(
+      child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: HomePage(),
+        theme: ThemeData(
+          primarySwatch: Colors.brown,
+          sliderTheme: SliderThemeData(
+            activeTrackColor: Colors.brown,
+            inactiveTrackColor: Colors.brown[100],
+            thumbColor: Colors.brown,
+            overlayColor: Colors.brown.withOpacity(0.2),
+          ),
+        ),
+        home: const HomePage(),
       ),
     );
   }
