@@ -1,0 +1,28 @@
+name: Globe.dev Deployment
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.5'
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build for Web
+        run: flutter build web --dart-define=API_URL=${{ secrets.API_URL }}
+
+      - name: Deploy to Globe.dev
+        run: globe deploy --token ${{ secrets.GLOBE_TOKEN }}
