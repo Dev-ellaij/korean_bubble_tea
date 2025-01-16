@@ -26,6 +26,7 @@ class _HomePageState extends State<HomePage> {
 
     // Cart page
     const CartPage(),
+    //
   ];
 
   @override

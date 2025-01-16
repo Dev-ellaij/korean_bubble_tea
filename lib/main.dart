@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:korean_bubble_tea/models/shop.dart';
 import 'package:korean_bubble_tea/pages/home_page.dart';
+import 'package:korean_bubble_tea/pages/onboarding_page.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
             overlayColor: Colors.brown.withOpacity(0.2),
           ),
         ),
-        home: const HomePage(),
+        home: const OnboardingPage(),
       ),
     );
   }

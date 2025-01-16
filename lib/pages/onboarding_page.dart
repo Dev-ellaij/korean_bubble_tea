@@ -1,56 +1,100 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
+import 'package:korean_bubble_tea/pages/home_page.dart';
+import 'package:korean_bubble_tea/pages/intro_pages/intro_page_1.dart';
+import 'package:korean_bubble_tea/pages/intro_pages/intro_page_2.dart';
+import 'package:korean_bubble_tea/pages/intro_pages/intro_page_3.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({super.key});
 
   @override
-  State<OnboardingPage> createState() => _OnboardingPage();
+  State<OnboardingPage> createState() => _OnboardingPageState();
 }
 
-class _OnboardingPage extends State<OnboardingPage>
-    with SingleTickerProviderStateMixin {
-  // Animation controller
-  late final AnimationController _controller;
+class _OnboardingPageState extends State<OnboardingPage> {
+  // Controller to keep track of which page we're on
+  final PageController _controller = PageController();
 
-  bool bubbletea = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      duration: const Duration(seconds: 2),
-      vsync: this,
-    );
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+  // Keep track of if we are on the last page or not
+  bool onLastPage = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: GestureDetector(
-          onTap: () {
-            setState(() {
-              if (bubbletea == false) {
-                bubbletea = true;
-                _controller.forward();
-              } else {
-                bubbletea = false;
-                _controller.reverse();
-              }
-            });
-          },
-          child: Lottie.network(
-            'https://lottie.host/ff3c7e5f-8145-437c-8b59-9d11ef7b9684/fyFYJY78wJ.lottie',
+      body: Stack(
+        children: [
+          // PageView
+          PageView(
             controller: _controller,
+            onPageChanged: (index) {
+              setState(() {
+                onLastPage = (index == 2); // Check if it's the last page
+              });
+            },
+            children: const [
+              IntroPage1(), // First page
+              IntroPage2(), // Second page
+              IntroPage3(), // Third page
+            ],
           ),
-        ),
+          // Dot indicators and navigation controls
+          Align(
+            alignment: const Alignment(0, 0.75),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                // Skip button
+                GestureDetector(
+                  onTap: () {
+                    _controller.jumpToPage(2); // Skip to the last page
+                  },
+                  child: const Text(
+                    'Skip',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                ),
+
+                // SmoothPageIndicator
+                SmoothPageIndicator(
+                  controller: _controller,
+                  count: 3,
+                  effect: const WormEffect(
+                    activeDotColor: Colors.brown, // Match your app theme
+                    dotHeight: 12,
+                    dotWidth: 12,
+                  ),
+                ),
+
+                // Next or Done button
+                GestureDetector(
+                  onTap: () {
+                    if (onLastPage) {
+                      // Navigate to HomePage when on the last page
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const HomePage(),
+                        ),
+                      );
+                    } else {
+                      // Move to the next page
+                      _controller.nextPage(
+                        duration: const Duration(milliseconds: 500),
+                        curve: Curves.easeIn,
+                      );
+                    }
+                  },
+                  child: Text(
+                    onLastPage ? 'Done' : 'Next',
+                    style: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
