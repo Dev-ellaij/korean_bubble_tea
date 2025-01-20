@@ -11,7 +11,6 @@ class IntroPage2 extends StatefulWidget {
 class _IntroPage2State extends State<IntroPage2>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
-  bool bubbletea = false;
 
   @override
   void initState() {
@@ -31,23 +30,25 @@ class _IntroPage2State extends State<IntroPage2>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.brown[100],
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Lottie.network(
-            'https://lottie.host/ff3c7e5f-8145-437c-8b59-9d11ef7b9684/fyFYJY78wJ.lottie',
+          Lottie.asset(
+            'lib/images/Animation - bubbletea.json', // Replace with your actual file path
             controller: _controller,
             onLoaded: (composition) {
               _controller
                 ..duration = composition.duration
                 ..forward();
             },
-            height: 200,
-            width: 200,
+            height: 400,
+            width: 400,
           ),
           const SizedBox(height: 20),
           const Text(
-            'referred, beobeul-ti',
+            'korean Bubble Tea',
             style: TextStyle(fontSize: 20, color: Colors.black),
           ),
         ],

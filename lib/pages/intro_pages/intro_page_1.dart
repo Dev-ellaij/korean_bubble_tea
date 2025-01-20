@@ -30,26 +30,37 @@ class _IntroPage1State extends State<IntroPage1>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Lottie.network(
-            'https://lottie.host/ff3c7e5f-8145-437c-8b59-9d11ef7b9684/fyFYJY78wJ.lottie',
-            controller: _controller,
-            onLoaded: (composition) {
-              _controller
-                ..duration = composition.duration
-                ..forward();
-            },
-            height: 200,
-            width: 200,
-          ),
-          const SizedBox(height: 20),
-          const Text(
-            'Page 1, 버블티',
-            style: TextStyle(fontSize: 20, color: Colors.black),
-          ),
-        ],
+      backgroundColor: Colors.brown[100],
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(height: 20), // Space above Lottie
+            Lottie.asset(
+              'lib/images/Animation - bubbletea.json',
+              controller: _controller,
+              onLoaded: (composition) {
+                _controller
+                  ..duration = composition.duration
+                  ..forward();
+              },
+              height: 400,
+              width: 400,
+            ),
+            const SizedBox(height: 60), // Extra space for the dot indicator
+            const Text(
+              '버블티',
+              style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black),
+            ),
+            const SizedBox(
+                height: 40), // Additional spacing for a potential dot indicator
+          ],
+        ),
       ),
     );
   }
